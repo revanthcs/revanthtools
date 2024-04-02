@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter</title>
+<script>
+  function convertToIndianCurrency() {
+    var number = parseFloat(document.getElementById("numberInput").value);
+    if (isNaN(number)) {
+      alert("Please enter a valid number.");
+      return;
+    }
+
+    var crore = Math.floor(number / 10000000);
+    var lakh = Math.floor((number % 10000000) / 100000);
+    var thousand = Math.floor((number % 100000) / 1000);
+    var remainder = number % 1000;
+
+    var result = convertNumberToWords(crore) + " Crore " + convertNumberToWords(lakh) + " Lakh " + convertNumberToWords(thousand) + " Thousand " + convertNumberToWords(remainder) + " Rupees and zero paisa only";
+    document.getElementById("result").innerHTML = result;
+  }
+
+  function convertToUSDCurrency() {
+    var number = parseFloat(document.getElementById("numberInput").value);
+    if (isNaN(number)) {
+      alert("Please enter a valid number.");
+      return;
+    }
+
+    var million = Math.floor(number / 1000000);
+    var thousand = Math.floor((number % 1000000) / 1000);
+    var remainder = number % 1000;
+
+    var result = convertNumberToWords(million) + " Million " + convertNumberToWords(thousand) + " Thousand " + convertNumberToWords(remainder) + " Dollars";
+    document.getElementById("result").innerHTML = result;
+  }
+
+  function convertNumberToWords(number) {
+    var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  
+    if (number < 20) {
+      return words[number];
+    } else if (number < 100) {
+      return tens[Math.floor(number / 10)] + " " + words[number % 10];
+    } else {
+      return words[Math.floor(number / 100)] + " Hundred " + convertNumberToWords(number % 100);
+    }
+  }
+</script>
+</head>
+<body>
+  <h2>Currency Converter</h2>
+  <label for="numberInput">Enter number to convert:</label>
+  <input type="text" id="numberInput">
+  <button onclick="convertToIndianCurrency()">Convert to Indian Currency</button>
+  <button onclick="convertToUSDCurrency()">Convert to USD Currency</button>
+  <div id="result"></div>
+</body>
+</html>
